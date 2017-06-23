@@ -205,13 +205,15 @@ class KineticCMatrix(Matrix):
         gamma = np.matmul(scipy.linalg.inv(eigenvectors),
                           initial_concentrations)
 
-        concentration_matrix = np.empty(eigenvectors.shape,
+        # lecturenotes3cycle.pdf - equation 20
+        # A-matrix
+        amplitude_matrix = np.empty(eigenvectors.shape,
                                         dtype=np.float64)
 
         for i in range(eigenvectors.shape[0]):
-            concentration_matrix[i, :] = eigenvectors[:, i] * gamma[i]
+            amplitude_matrix[i, :] = eigenvectors[:, i] * gamma[i]
 
-        np.dot(np.copy(c_matrix), concentration_matrix, out=c_matrix)
+        np.dot(np.copy(c_matrix), amplitude_matrix, out=c_matrix)
 
     def time(self):
         return self.dataset.data.get_axis("time")
